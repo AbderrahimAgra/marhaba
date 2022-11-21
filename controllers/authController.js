@@ -9,7 +9,7 @@ exports.register = async (req, res, next) => {
     // verify if email already taken
     const emailTaken = await User.findOne({email: req.body.email})
     // hash the password
-    const hashPassword = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10))
+    const hashPassword = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10)) 
     // get role id
     let userRole = await Role.findOne({role: req.body.role})
     // set a default role if the user didn't set the role

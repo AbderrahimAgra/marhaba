@@ -3,10 +3,12 @@ const express = require('express');
 const app = express();
 const db = require('./config/db');
 const errorHandler = require('./middlewares/errorHandler')
+const cors = require('cors');
+
 // middlwares for handling or parsing incoming requests
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-
+app.use(cors());
 
 
 const port = process.env.PORT
