@@ -4,6 +4,16 @@ const app = express();
 const db = require('./config/db');
 const errorHandler = require('./middlewares/errorHandler')
 const cors = require('cors');
+const Role = require('./models/Roles');
+
+(async () => {
+    if (await Role.count() === 0)
+        await Role.insertMany([
+            { role: 'manager' },
+            { role: 'customer' },
+            { role: 'delivery' }
+        ]);
+})();
 
 // middlwares for handling or parsing incoming requests
 app.use(express.urlencoded({ extended: false }))
