@@ -35,6 +35,7 @@ app.listen(port , (err)=>{
 })
 
 
+module.exports = app;
 
 
 

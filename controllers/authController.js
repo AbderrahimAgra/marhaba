@@ -34,7 +34,7 @@ exports.register = async (req, res, next) => {
                 const userRegister = await user.save()
                 // token for email verification
                 const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, { expiresIn: '1h' },)
-                sendEmail(user.email, token, 'auth/register/verify', 'Verify Your Email ')
+                await sendEmail(user.email, token, 'auth/register/verify', 'Verify Your Email ')
                 res.send({
                     message: "registerd succefully",
                     userRegister
@@ -61,7 +61,7 @@ exports.register = async (req, res, next) => {
 
 // send email function
 
-const sendEmail = (email, token, route, mailGoal) => {
+const sendEmail = async (email, token, route, mailGoal) => {
     // set up the email transporter
     const transporter = nodemailer.createTransport({
         service: process.env.SERVICE_TRANSPORTER,
@@ -80,7 +80,7 @@ const sendEmail = (email, token, route, mailGoal) => {
         subject: mailGoal,
         html: `<p>Hi ${mailGoal} <a href="http://localhost:3000/api/${route}/${token}">here</a></h2>`
     }
-    transporter.sendMail(mailContent, (err) => !err ? console.log('mail just sent to ' + email) : console.log(err))
+    await transporter.sendMail(mailContent)
 }
 
 // method : post
